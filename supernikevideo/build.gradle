@@ -1,0 +1,74 @@
+apply plugin: 'com.android.library'
+apply plugin: "guru.stefma.bintrayrelease"
+
+//添加组路径，同时也是在jcenter上的组路径
+group = "com.lws"
+
+//添加mouble在bintray上的版本号，同时也是在jcenter上的版本号
+version = "1.1.0"
+
+//添加bintrayrelease的依赖
+androidArtifact {
+    artifactId = "bintrayrelease"
+}
+
+//配置上传信息
+publish {
+    userOrg = 'vinsonien' //bintray用户名
+    repoName = 'XOXO' //要传过去的库名
+    artifactId = 'supernikevideo' //要传过去的项目名
+    desc = 'This is used to write articles' //描述
+    website = 'https://github.com/vinsonien/TestSuperNikeVideo' // 项目网站，尽量用对，因为在之后上传到jcenter的时候会检查，不过那个时候再改也没问题
+}
+
+
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        ndk {
+            abiFilters 'armeabi','arm64-v8a', 'armeabi-v7a', 'x86','x86_64'
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+    api 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+    api 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+    api 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
+    api 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+    api 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
+    api 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
+
+    api 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.8'
+
+}
